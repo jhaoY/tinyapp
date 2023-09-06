@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser')
 const app = express();
 const PORT = 8080;
 
+// Function to generate a random string for shortURL ID
 const generateRandomString = () => {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -33,6 +34,10 @@ app.get('/urls', (req, res) => {
    };
   res.render('urls_index', templateVars);
 });
+
+app.get('/register', (req, res) => {
+  res.render('urls_register')
+})
 
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
