@@ -1,6 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser')
-const { generateRandomString, addUser } = require('./helpers.js')
+const { generateRandomString, addUser, findUserByEmail } = require('./helpers.js')
 const { users } = require('./data.js')
 
 const app = express();
@@ -35,6 +35,13 @@ app.get('/register', (req, res) => {
 
 app.post('/register', (req, res) => {
   const { email, password } = req.body;
+  if (email === "" || password === "") {
+    res.status(400);
+    res.send('Invalid email and/or password')
+  } else if (findUserByEmail(email)) {
+    res.status(400);
+    res.send('User already exists')
+  }
   const userID = addUser(email, password);
   res.cookie('user_id', userID)
   console.log(users);
