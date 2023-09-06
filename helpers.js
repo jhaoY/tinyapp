@@ -11,7 +11,6 @@ const generateRandomString = () => {
 }
 
 // Function to add new user to users object
-
 const addUser = (email, password) => {
   const newUser = {
     id: generateRandomString(),
