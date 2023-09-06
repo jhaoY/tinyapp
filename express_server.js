@@ -48,6 +48,10 @@ app.post('/register', (req, res) => {
   res.redirect('/urls')
 })
 
+app.get('/login', (req, res) => {
+  res.render('urls_login')
+})
+
 app.get("/urls/new", (req, res) => {
   res.render("urls_new");
 });
