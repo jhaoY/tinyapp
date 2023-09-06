@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 app.get('/urls', (req, res) => {
   const templateVars = {
     urls: urlDatabase,
-    username: req.cookies['username']
+    user: users[req.cookies['user_id']]
   };
   res.render('urls_index', templateVars);
 });
@@ -82,13 +82,13 @@ app.post('/urls/:id/update', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-  const username = req.body.username;
-  res.cookie('username', username)
+  const userID = req.body.id;
+  res.cookie('user_id', userID)
   res.redirect('/urls');
 })
 
 app.post('/logout', (req, res) => {
-  res.clearCookie('username');
+  res.clearCookie('user_id');
   res.redirect('/urls');
 })
 
