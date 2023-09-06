@@ -6,16 +6,17 @@ const { users } = require('./data.js')
 const app = express();
 const PORT = 8080;
 
-
+app.use(cookieParser())
+app.use(express.static('public'))
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
+
 
 const urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
   "9sm5xK": "http://www.google.com"
 };
 
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser())
 
 app.get('/', (req, res) => {
   res.send('Hello');
@@ -93,9 +94,19 @@ app.post('/urls/:id/update', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
-  const userID = req.body.id;
-  res.cookie('user_id', userID)
-  res.redirect('/urls');
+  const { email, password } = req.body;
+  const user = findUserByEmail(email);
+  if (!user) {
+    res.status(403)
+    res.send("Email does not exist")
+  } else if (user.password !== password) {
+    res.status(403)
+    res.send("Incorrect password")
+  } else {
+    const userID = user.id
+    res.cookie('user_id', userID)
+    res.redirect('/urls');
+  }
 })
 
 app.post('/logout', (req, res) => {
