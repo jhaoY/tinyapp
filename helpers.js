@@ -24,7 +24,18 @@ const addUser = (email, password) => {
   return newUserID;
 }
 
+// Check if user exists
+const findUserByEmail = (email) => {
+  for (let user in users) {;
+    if (users[user].email === email) {
+      return users[user];
+    }
+  }
+  return null;
+}
+
 module.exports = {
   generateRandomString,
-  addUser
+  addUser,
+  findUserByEmail
 };
