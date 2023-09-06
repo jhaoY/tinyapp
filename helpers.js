@@ -1,3 +1,5 @@
+const { users } = require('./data');
+
 // Function to generate a random string for shortURL ID
 const generateRandomString = () => {
   let result = '';
@@ -8,6 +10,22 @@ const generateRandomString = () => {
   return result;
 }
 
-module.exports = {
-  generateRandomString
+// Function to add new user to users object
+
+const addUser = (email, password) => {
+  const newUser = {
+    id: generateRandomString(),
+    email,
+    password
+  };
+  const newUserID = generateRandomString();
+  users[newUserID] = newUser;
+  console.log('New user added', newUser)
+
+  return newUserID;
 }
+
+module.exports = {
+  generateRandomString,
+  addUser
+};

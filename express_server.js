@@ -1,17 +1,11 @@
 const express = require('express');
 const cookieParser = require('cookie-parser')
+const { generateRandomString, addUser } = require('./helpers.js')
+const { users } = require('./data.js')
+
 const app = express();
 const PORT = 8080;
 
-// Function to generate a random string for shortURL ID
-const generateRandomString = () => {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  for (let i = 0; i < 6; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
 
 app.set('view engine', 'ejs');
 
@@ -28,15 +22,23 @@ app.get('/', (req, res) => {
 });
 
 app.get('/urls', (req, res) => {
-  const templateVars = { 
+  const templateVars = {
     urls: urlDatabase,
     username: req.cookies['username']
-   };
+  };
   res.render('urls_index', templateVars);
 });
 
 app.get('/register', (req, res) => {
   res.render('urls_register')
+})
+
+app.post('/register', (req, res) => {
+  const { email, password } = req.body;
+  const userID = addUser(email, password);
+  res.cookie('user_id', userID)
+  console.log(users);
+  res.redirect('/urls')
 })
 
 app.get("/urls/new", (req, res) => {

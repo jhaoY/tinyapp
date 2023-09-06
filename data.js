@@ -11,15 +11,5 @@ const users = {
   },
 };
 
-// Function to add new user to users object
-
-const addUser = (id, email, password) => {
-  const newUser = {
-    id,
-    email,
-    password
-  }
-users[newUser.generateRandomString()]
-}
 
 module.exports = { users }
