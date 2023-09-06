@@ -1,15 +1,11 @@
-const users = {
-  userRandomID: {
-    id: "randomID1",
-    email: "test@test.com",
-    password: "1234",
-  },
-  userRandomID2: {
-    id: "randomID2",
-    email: "test1@test.com",
-    password: "password",
-  },
-};
+const user1 = {
+  id: 'user1',
+  email: 'test@test.com',
+  password: '123'
+}
 
+const users = {
+  user1: user1
+};
 
 module.exports = { users }
