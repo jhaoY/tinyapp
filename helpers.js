@@ -17,11 +17,10 @@ const addUser = (email, password) => {
     email,
     password
   };
-  const newUserID = generateRandomString();
-  users[newUserID] = newUser;
+  users[newUser.id] = newUser;
   console.log('New user added', newUser)
 
-  return newUserID;
+  return newUser.id;
 }
 
 // Check if user exists
