@@ -17,15 +17,15 @@
 
     <title>Login</title>
   </head>
-  <body>
-    <%- include('partials/_header') %>
-    <h1>LOGIN</h1>
-
-    <form action="/login" method="POST">
-      <label for="email">Email</label>
-      <input type="email" name="email" placeholder="Email">
-      <label for="password">Password</label>
-      <input type="password" name="password">
-     <button type="submit">Login</button>
-    </form>
-</body>
+  <%- include('partials/_header') %>
+    <body>
+      <h1>LOGIN</h1>
+      <form action="/login" method="POST">
+        <label for="email">Email</label>
+        <input type="email" name="email" placeholder="Email">
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Password">
+        <button type="submit" class="btn-primary">Login</button>
+      </form>
+    </body>
+</html>
