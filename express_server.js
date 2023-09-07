@@ -1,7 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const { generateRandomString, addUser, findUserByEmail } = require('./helpers.js');
-const { users } = require('./data.js');
+const { users, urlDatabase } = require('./data.js');
 
 const app = express();
 const PORT = 8080;
@@ -88,10 +88,14 @@ app.get('/urls', (req, res) => {
 });
 
 app.get('/urls/new', (req, res) => {
+  const templateVars = {
+    urls: urlDatabase,
+    user: users[req.cookies.user_id]
+  }
   if (!req.cookies.user_id){
     res.redirect('/login')
   } else {
-    res.render('urls_new');
+    res.render('urls_new', templateVars);
   }
 });
 
@@ -139,11 +143,6 @@ app.get('/urls.json', (req, res) => {
   res.json(urlDatabase);
 });
 
-// URL database
-const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com",
-};
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
