@@ -132,12 +132,20 @@ app.get('/urls/:id', (req, res) => {
 
 app.post('/urls/:id/update', (req, res) => {
   const id = req.params.id;
+  if (!req.cookies.user_id) {
+    res.send("Please log in to update URLS\n");
+    return;
+  } 
   urlDatabase[id].longURL = req.body.newLongURL;
   res.redirect('/urls');
 });
 
 app.post('/urls/:id/delete', (req, res) => {
   delete urlDatabase[req.params.id];
+  if (!req.cookies.user_id) {
+    res.send("Please log in to delete URLS\n");
+    return;
+  } 
   console.log(urlDatabase);
   res.redirect('/urls');
 });
