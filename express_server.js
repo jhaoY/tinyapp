@@ -18,7 +18,11 @@ app.set('view engine', 'ejs');
 
 // Home page
 app.get('/', (req, res) => {
-  res.send('Hello');
+  if (req.session.user_id) {
+    res.redirect('/urls')
+  } else {
+    res.redirect('/login')
+  }
 });
 
 // Register routes
