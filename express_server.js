@@ -123,6 +123,10 @@ app.post('/urls', (req, res) => {
 });
 
 app.get('/urls/:id', (req, res) => {
+  if (!urlDatabase[req.params.id]) {
+    res.status(404);
+    res.send('ERROR: URL not found')
+  }
   const templateVars = { 
     user: [req.session.user_id],
     id: req.params.id, 
