@@ -49,7 +49,6 @@ app.post('/register', (req, res) => {
   } else {
     const userID = addUser(email, hashPass);
     req.session.user_id = userID;
-    console.log(users);
     res.redirect('/urls');
   }
 });
@@ -161,7 +160,6 @@ app.post('/urls/:id/delete', (req, res) => {
     res.send("Please log in to delete URLS\n");
     return;
   } 
-  console.log(urlDatabase);
   res.redirect('/urls');
 });
 
@@ -183,5 +181,5 @@ app.get('/urls.json', (req, res) => {
 
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`TinyURL app listening on port ${PORT}`);
 });
