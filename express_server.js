@@ -1,5 +1,4 @@
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const bcrypt = require('bcryptjs')
 const { generateRandomString, addUser, findUserByEmail, urlsForUser } = require('./helpers.js');
@@ -8,7 +7,6 @@ const { users, urlDatabase } = require('./data.js');
 const app = express();
 const PORT = 8080;
 
-app.use(cookieParser());
 app.use(cookieSession({
   name: 'session',
   keys: ['one', 'two', 'three'],
@@ -82,7 +80,6 @@ app.post('/login', (req, res) => {
 
 // Logout route
 app.post('/logout', (req, res) => {
-  // res.clearCookie('user_id');
   req.session = null;
   res.redirect('/login');
 });
