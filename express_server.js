@@ -39,7 +39,7 @@ app.post('/register', (req, res) => {
   if (email === '' || hashPass === '') {
     res.status(400);
     res.send('Empty email and/or password');
-  } else if (findUserByEmail(email)) {
+  } else if (findUserByEmail(email, users)) {
     res.status(400);
     res.send('User already exists');
   } else {
@@ -64,7 +64,7 @@ app.get('/login', (req, res) => {
 
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
-  const user = findUserByEmail(email);
+  const user = findUserByEmail(email, users);
   if (!user) {
     res.status(403);
     res.send('Email does not exist');

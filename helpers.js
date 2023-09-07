@@ -1,4 +1,4 @@
-const { users, urlDatabase } = require('./data');
+const { urlDatabase } = require('./data');
 
 // Function to generate a random string for shortURL ID
 const generateRandomString = () => {
@@ -24,10 +24,10 @@ const addUser = (email, password) => {
 }
 
 // Check if user exists
-const findUserByEmail = (email) => {
-  for (let user in users) {;
-    if (users[user].email === email) {
-      return users[user];
+const findUserByEmail = (email, database) => {
+  for (let user in database) {
+    if (database[user].email === email) {
+      return database[user];
     }
   }
   return null;
