@@ -126,7 +126,12 @@ app.post('/urls/:id/delete', (req, res) => {
 // Redirect short URLs to their corresponding long URLs
 app.get('/u/:id', (req, res) => {
   const longURL = urlDatabase[req.params.id];
-  res.redirect(longURL);
+  if(!longURL) {
+    res.status(404);
+    res.send('Whoops, that doesn\'t exist!')
+  } else {
+    res.redirect(longURL);
+  }
 });
 
 // JSON endpoint for URL database
