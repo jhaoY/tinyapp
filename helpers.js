@@ -1,6 +1,6 @@
 const { users, urlDatabase } = require('./data');
 
-// Function to generate a random string for shortURL ID
+// Generates a random string
 const generateRandomString = () => {
   let result = '';
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -10,7 +10,7 @@ const generateRandomString = () => {
   return result;
 };
 
-// Function to add new user to users object
+// Adds new user to users object
 const addUser = (email, password) => {
   const newUser = {
     id: generateRandomString(),
@@ -23,7 +23,7 @@ const addUser = (email, password) => {
   return newUser.id;
 };
 
-// Check if user exists
+// Checks if user exists
 const findUserByEmail = (email, database) => {
   for (let user in database) {
     if (database[user].email === email) {
@@ -33,7 +33,7 @@ const findUserByEmail = (email, database) => {
   return null;
 };
 
-// Returns URL where userID is equal to currently logged in user
+// Looks for URLs that are created by user
 const urlsForUser = (id) => {
   let userURLs = {};
   for (let url in urlDatabase) {
