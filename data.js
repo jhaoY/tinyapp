@@ -2,7 +2,7 @@
 const user1 = {
   id: 'user1',
   email: 'test@test.com',
-  password: '123'
+  password: '$2a$10$sIDhMthOKSsOcJCqwhrbdehTApzFkBUeLg7EqRZoMpuN4duA3qlue'
 }
 
 const users = {
