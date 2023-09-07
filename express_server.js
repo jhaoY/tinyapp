@@ -131,7 +131,7 @@ app.get('/urls/:id', (req, res) => {
     res.send('ERROR: URL not found');
   }
   const templateVars = {
-    user: [req.session.user_id],
+    user: users[req.session.user_id],
     id: req.params.id,
     longURL: urlDatabase[req.params.id].longURL
   };
