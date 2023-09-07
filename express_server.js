@@ -1,5 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const bcrypt = require('bcryptjs')
 const { generateRandomString, addUser, findUserByEmail, urlsForUser } = require('./helpers.js');
 const { users, urlDatabase } = require('./data.js');
 
@@ -30,14 +31,15 @@ app.get('/register', (req, res) => {
 
 app.post('/register', (req, res) => {
   const { email, password } = req.body;
-  if (email === '' || password === '') {
+  const hashPass = bcrypt.hashSync(password, 10);
+  if (email === '' || hashPass === '') {
     res.status(400);
-    res.send('Invalid email and/or password');
+    res.send('Empty email and/or password');
   } else if (findUserByEmail(email)) {
     res.status(400);
     res.send('User already exists');
   } else {
-    const userID = addUser(email, password);
+    const userID = addUser(email, hashPass);
     res.cookie('user_id', userID);
     console.log(users);
     res.redirect('/urls');
@@ -62,7 +64,7 @@ app.post('/login', (req, res) => {
   if (!user) {
     res.status(403);
     res.send('Email does not exist');
-  } else if (user.password !== password) {
+  } else if (!bcrypt.compareSync(password, user.password)) {
     res.status(403);
     res.send('Incorrect password');
   } else {
