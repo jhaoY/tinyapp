@@ -89,7 +89,6 @@ app.get('/urls', (req, res) => {
 
 app.get('/urls/new', (req, res) => {
   const templateVars = {
-    urls: urlDatabase,
     user: users[req.cookies.user_id]
   }
   if (!req.cookies.user_id){
@@ -103,21 +102,26 @@ app.post('/urls', (req, res) => {
   if (!req.cookies.user_id) {
     res.send("Please log in to shorten URLS\n")
   } else {
-    console.log(req.body);
-    let id = generateRandomString();
-    urlDatabase[id] = req.body.longURL;
+    const id = generateRandomString();
+    urlDatabase[id] = {
+      longURL: req.body.longURL,
+      userID: req.cookies.user_id
+    };
     res.redirect(`/urls/${id}`);
   }
 });
 
 app.get('/urls/:id', (req, res) => {
-  const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id] };
+  const templateVars = { 
+    user: [req.cookies.user_id],
+    id: req.params.id, 
+    longURL: urlDatabase[req.params.id].longURL };
   res.render('urls_show', templateVars);
 });
 
 app.post('/urls/:id/update', (req, res) => {
   const id = req.params.id;
-  urlDatabase[id] = req.body.newLongURL;
+  urlDatabase[id].longURL = req.body.newLongURL;
   res.redirect('/urls');
 });
 
@@ -129,7 +133,7 @@ app.post('/urls/:id/delete', (req, res) => {
 
 // Redirect short URLs to their corresponding long URLs
 app.get('/u/:id', (req, res) => {
-  const longURL = urlDatabase[req.params.id];
+  const longURL = urlDatabase[req.params.id].longURL;
   if(!longURL) {
     res.status(404);
     res.send('Whoops, that doesn\'t exist!')
