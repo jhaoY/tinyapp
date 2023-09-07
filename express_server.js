@@ -1,6 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const { generateRandomString, addUser, findUserByEmail } = require('./helpers.js');
+const { generateRandomString, addUser, findUserByEmail, urlsForUser } = require('./helpers.js');
 const { users, urlDatabase } = require('./data.js');
 
 const app = express();
@@ -81,10 +81,14 @@ app.post('/logout', (req, res) => {
 // URL related routes
 app.get('/urls', (req, res) => {
   const templateVars = {
-    urls: urlDatabase,
+    urls: urlsForUser(req.cookies.user_id),
     user: users[req.cookies.user_id],
   };
-  res.render('urls_index', templateVars);
+  if (!req.cookies.user_id) {
+    res.send('ERROR: Cannot view URLs while signed out. Please login or register as a user.')
+  } else {
+    res.render('urls_index', templateVars);
+  };
 });
 
 app.get('/urls/new', (req, res) => {
@@ -115,8 +119,15 @@ app.get('/urls/:id', (req, res) => {
   const templateVars = { 
     user: [req.cookies.user_id],
     id: req.params.id, 
-    longURL: urlDatabase[req.params.id].longURL };
-  res.render('urls_show', templateVars);
+    longURL: urlDatabase[req.params.id].longURL 
+  };
+  if (!req.cookies.user_id) {
+    res.send('ERROR: Cannot view URLs while signed out. Please login or register as a user.')
+  } else if (urlDatabase[req.params.id].userID !== req.cookies.user_id) {
+    res.send('ERROR: URL not accessible to unauthorized owners')
+  } else {
+    res.render('urls_show', templateVars);
+  }
 });
 
 app.post('/urls/:id/update', (req, res) => {

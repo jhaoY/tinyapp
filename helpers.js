@@ -1,4 +1,4 @@
-const { users } = require('./data');
+const { users, urlDatabase } = require('./data');
 
 // Function to generate a random string for shortURL ID
 const generateRandomString = () => {
@@ -33,8 +33,22 @@ const findUserByEmail = (email) => {
   return null;
 }
 
+// Returns URL where userID is equal to currently logged in user
+const urlsForUser = (id) => {
+  let userURLs = {};
+  for (let url in urlDatabase) {
+    if (id === urlDatabase[url].userID) {
+      userURLs[url] = {
+        longURL: urlDatabase[url].longURL
+      }
+    }
+  }
+  return userURLs;
+};
+
 module.exports = {
   generateRandomString,
   addUser,
-  findUserByEmail
+  findUserByEmail,
+  urlsForUser
 };
