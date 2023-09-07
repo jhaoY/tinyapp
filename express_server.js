@@ -88,14 +88,22 @@ app.get('/urls', (req, res) => {
 });
 
 app.get('/urls/new', (req, res) => {
-  res.render('urls_new');
+  if (!req.cookies.user_id){
+    res.redirect('/login')
+  } else {
+    res.render('urls_new');
+  }
 });
 
 app.post('/urls', (req, res) => {
-  console.log(req.body);
-  let id = generateRandomString();
-  urlDatabase[id] = req.body.longURL;
-  res.redirect(`/urls/${id}`);
+  if (!req.cookies.user_id) {
+    res.send("Please log in to shorten URLS\n")
+  } else {
+    console.log(req.body);
+    let id = generateRandomString();
+    urlDatabase[id] = req.body.longURL;
+    res.redirect(`/urls/${id}`);
+  }
 });
 
 app.get('/urls/:id', (req, res) => {
