@@ -1,4 +1,4 @@
-const { urlDatabase } = require('./data');
+const { users, urlDatabase } = require('./data');
 
 // Function to generate a random string for shortURL ID
 const generateRandomString = () => {
