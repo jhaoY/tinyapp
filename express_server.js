@@ -10,12 +10,6 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
-// Middleware for user authentication
-app.use((req, res, next) => {
-  const userId = req.cookies.user_id;
-  res.locals.user = users[userId]; // Make user available to all templates
-  next();
-});
 
 // Home page
 app.get('/', (req, res) => {
@@ -24,7 +18,14 @@ app.get('/', (req, res) => {
 
 // Register routes
 app.get('/register', (req, res) => {
-  res.render('urls_register');
+  const templateVars = {
+    user: users[req.params.id],
+  };
+  if(req.cookies.user_id) {
+    res.redirect('/urls')
+  } else {
+    res.render('urls_register', templateVars);
+  }
 });
 
 app.post('/register', (req, res) => {
@@ -45,7 +46,14 @@ app.post('/register', (req, res) => {
 
 // Login routes
 app.get('/login', (req, res) => {
-  res.render('urls_login');
+  const templateVars = {
+    user: users[req.params.id],
+  };
+  if(req.cookies.user_id) {
+    res.redirect('/urls')
+  } else {
+    res.render('urls_login', templateVars);
+  }
 });
 
 app.post('/login', (req, res) => {
