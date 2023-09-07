@@ -3,7 +3,7 @@ const user1 = {
   id: 'user1',
   email: 'test@test.com',
   password: '$2a$10$sIDhMthOKSsOcJCqwhrbdehTApzFkBUeLg7EqRZoMpuN4duA3qlue'
-}
+};
 
 const users = {
   user1: user1
@@ -21,4 +21,4 @@ const urlDatabase = {
   }
 };
 
-module.exports = { users, urlDatabase }
+module.exports = { users, urlDatabase };

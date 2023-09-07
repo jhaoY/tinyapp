@@ -8,7 +8,7 @@ const generateRandomString = () => {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
   return result;
-}
+};
 
 // Function to add new user to users object
 const addUser = (email, password) => {
@@ -18,10 +18,10 @@ const addUser = (email, password) => {
     password
   };
   users[newUser.id] = newUser;
-  console.log('New user added', newUser)
+  console.log('New user added', newUser);
 
   return newUser.id;
-}
+};
 
 // Check if user exists
 const findUserByEmail = (email, database) => {
@@ -31,7 +31,7 @@ const findUserByEmail = (email, database) => {
     }
   }
   return null;
-}
+};
 
 // Returns URL where userID is equal to currently logged in user
 const urlsForUser = (id) => {
@@ -40,7 +40,7 @@ const urlsForUser = (id) => {
     if (id === urlDatabase[url].userID) {
       userURLs[url] = {
         longURL: urlDatabase[url].longURL
-      }
+      };
     }
   }
   return userURLs;
